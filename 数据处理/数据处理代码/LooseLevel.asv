@@ -1,0 +1,23 @@
+clc
+clear all
+
+path='E:\毕业相关\大论文\实验数据\弯管\20181122卡箍松动嵌入式传感器数据\FBG解调系统数据文件\数据文件\2018-11-23\9Mpa';
+% path1 = 'E:\管路小组\数据处理\实验数据\20171127弯管松动实验\9Mpa\FBG解调系统数据文件\数据文件\2017-11-27\松动\修复跳点后文件';
+nx=dir(path);%读取盖路径下的所有文件
+nxx=nx(3:end);%去掉两个隐藏文件
+n=length(nxx);%该路径下txt文件个数
+
+for i=1:7
+     str=strcat(path,'\',nxx(i).name,'\2.txt');
+   [~,~,~,~,~,~,H1]=textread(str,'%f%f%f%f%f%f%f',2000,'headerlines',8003); %跳过3行开始读
+   AA(:,i)=1000*detrend(H1)/1.2;
+   [f,fft_data]=plotfft(AA(:,i),2000);
+    subplot(3,3,3*(j-1)+k);plot(f(:,3*(j-1)+k));
+end
+for j=1:3
+    for k=1:3
+        subplot(3,3,3*(j-1)+k);plot(f(:,3*(j-1)+k));
+    end
+end
+
+
